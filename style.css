@@ -23,6 +23,7 @@
   --font-family-titulos: "JetBrains Mono";
   --font-family-textos: "Merriweather";
   --font-size: 17px;
+  --cursor-img: "https://res.cloudinary.com/alexiavilar/image/upload/v1619543032/Portafolio/smiley_d9zxvi.svg";
   /* --h1: 180px;
   --h2: 130px;
   --h3: 90px;
@@ -35,10 +36,13 @@
 body {
   font-family: var(--font-family-textos);
   font-weight: 400;
-  margin: 30px;
+
   background-color: var(--bg);
-  cursor: url(https://res.cloudinary.com/alexiavilar/image/upload/v1619543032/Portafolio/smiley_d9zxvi.svg),
-    auto;
+  /* cursor: url(https://res.cloudinary.com/alexiavilar/image/upload/v1619543032/Portafolio/smiley_d9zxvi.svg), */
+  /* auto; */
+  cursor: url("./iconos/smiley.svg"), auto;
+  scroll-behavior: smooth;
+  /* overflow: hidden; condicional si el .cat is open */
 }
 
 h1,
@@ -60,7 +64,8 @@ h2 {
 }
 
 h3 {
-  font-size: var(--h3);
+  font-size: 20px;
+  align-items: center;
 }
 
 h4 {
@@ -88,6 +93,10 @@ a {
   text-decoration: none;
 }
 
+svg text a:hover {
+  fill: magenta;
+}
+
 /* Componentes */
 
 .proyectos-indiv h2 {
@@ -97,10 +106,11 @@ a {
   color: var(--primario);
 }
 
-.menu {
+.menu svg {
   max-width: 200px;
   max-height: 200px;
-  position: sticky;
+  position: fixed;
+  z-index: 1000;
 }
 /*
 .menu "scroll", () => {
@@ -115,12 +125,14 @@ a {
 }
 
 .titulo {
+  /* position: absolute; */
+  /* background-color: magenta; */
   top: 0;
   font-family: var(--font-family-titulos);
   font-weight: bolder;
   grid-area: titulo;
   font-size: 40px;
-  line-height: 150px;
+  /* line-height: 0; */
   color: var(--primario);
   text-align: center;
 }
@@ -135,19 +147,27 @@ a {
   align-self: center;
 }
 
+/* Header */
 .header {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
   grid-template-rows: 0.2fr 1.8fr;
-  gap: 0px 0px;
   grid-template-areas:
     "titulo titulo"
     "yo texto-principal";
+  margin: 30px;
 }
 .header {
   grid-area: menu;
 }
 
+@media screen and (max-width: 415px) {
+  .header {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Nav */
 .nav {
   display: inline-block;
   grid-area: nav;
@@ -166,40 +186,48 @@ a {
 
 .yo {
   width: 315px;
+  margin: 0 0 0 auto;
   height: 450px;
 }
 
-.proyectos {
+.example-origin {
+  flex-basis: 100%;
+  flex-grow: 1;
+  padding: 10px;
+}
+
+/* Antes
+ .proyectos {
   display: grid;
   grid-auto-flow: column;
   gap: 60px;
   overflow-x: scroll;
+  padding-top: 220px;
+  margin: 30px;
+} */
+
+.proyectos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding-top: 220px;
+  margin: 30px;
+}
+
+@media screen and (max-width: 600px) {
+  .proyectos {
+    /* display: grid; */
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    overflow-x: scroll;
+    padding-top: 220px;
+    margin: 30px;
+  }
 }
 
 .proyectos > * {
-  position: relative;
-}
-
-.hero {
-  display: grid;
-  place-content: center;
-}
-
-.hero .hero-titulo {
-  font-family: var(--font-family-titulos);
-  font-weight: bolder;
-  font-size: 40px;
-  line-height: 150px;
-  color: var(--primario);
-  text-align: center;
-}
-
-.hero .intro {
-  display: flex;
-  flex-direction: row;
-}
-
-.hero {
+  position: unset;
 }
 
 /* .mascara {
@@ -263,26 +291,41 @@ a {
 }
 
 .cat {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
   background-color: var(--secundario);
   color: white;
   padding: 50px;
-  position: relative;
+  /* position: relative; */
   overflow: hidden;
 }
 
 .cat2 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
   background-color: var(--secundario-2);
   color: white;
   padding: 50px;
-  position: relative;
+  /* position: relative; */
   overflow: hidden;
 }
 
 .cat3 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
   background-color: var(--secundario-3);
   color: black;
   padding: 50px;
-  position: relative;
+  /* position: relative; */
   overflow: hidden;
 }
 
@@ -329,19 +372,19 @@ a {
   /* margin-top: 300px; */
 }
 
-.scroll {
+/*.scroll {
   display: grid;
   grid-auto-flow: column;
   gap: 1000px;
   overflow-x: scroll;
   /*overflow: hidden;
   max-width: 90vw;
-  margin: 0 auto;*/
+  margin: 0 auto;
 }
 
 .scroll > * {
   position: relative;
-}
+}*/
 
 .cat-img {
   flex-shrink: 0;
@@ -413,6 +456,8 @@ a {
   position: relative;
   overflow: hidden;
   width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .carrusel .open:checked + figure {
@@ -424,26 +469,28 @@ a {
   position: absolute;
   opacity: 0;
   transition: opacity 0.4s ease-out;
+  margin: 0;
 }
 
 .carrusel figure img {
   display: block;
   height: auto;
   max-width: 100%;
+  margin-right: 0;
 }
 
 .carrusel-nav {
   background: rgba(0, 0, 0, 0.3);
   border-radius: 50%;
   color: #fff;
-  cursor: pointer;
+  /* cursor: pointer; */
   display: none;
   font-size: 40px;
   height: 40px;
   line-height: 35px;
   position: absolute;
   top: 50%;
-  cursor: pointer;
+  /* cursor: pointer; */
   transform: translate(0, -50%);
   transition: opacity 0.4s linear;
   text-align: center;
@@ -501,7 +548,7 @@ a {
 
 .dot {
   color: #fff;
-  cursor: pointer;
+  /* cursor: pointer; */
   display: block;
   font-size: 2rem;
   transition: opacity 0.4s linear;
@@ -524,11 +571,79 @@ a {
 }
 
 .contact-me {
-  margin: 500px;
+  display: grid;
+  place-content: center;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
   font-family: var(--font-family-textos);
   font-size: 50px;
   font-weight: bold;
   color: var(--primario);
-  align-self: center;
+  /* align-self: center; */
   background-color: var(--secundario-3);
+}
+
+.contacto {
+  font-family: var(--font-family-textos);
+  font-size: 20px;
+  font-style: italic;
+  font-weight: normal;
+  color: var(--primario);
+  align-self: center;
+}
+
+.proyecto {
+  display: flex;
+}
+
+@media screen and (max-width: 415px) {
+  .header {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+* {
+  overflow-x: hidden !important;
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    overflow-x: hidden;
+  }
+  .header {
+    display: flex;
+    flex-direction: column;
+  }
+  .menu svg {
+    max-width: 170px;
+    max-height: 170px;
+    transform: translatey(0);
+  }
+  .proyectos {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    margin: 0 auto;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  .proyectos div {
+    width: 100%;
+    padding: 0;
+    margin: 0 10px;
+  }
+
+  .proyectos div h3 {
+    line-height: 2;
+  }
+  .proyectos .mascara {
+    all: unset;
+  }
+  .absolute {
+    all: unset;
+  }
 }
